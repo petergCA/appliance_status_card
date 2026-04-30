@@ -1,0 +1,6 @@
+{
+  "name": "Appliance Status Card",
+  "render_readme": true,
+  "content_in_root": true,
+  "filename": "appliance_status_card.js"
+}
