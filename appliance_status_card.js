@@ -317,13 +317,20 @@
     }
   }
 
-  customElements.define('appliance-status-card', ApplianceStatusCard);
+  // Define once. Cards bundling the scoped-custom-element-registry polyfill
+  // (tabbed-card does) patch customElements.define and re-run this module, and
+  // an unguarded define then throws "already been used with this registry",
+  // which surfaces as a Configuration Error on any dashboard using both.
+  // Guarding the registration also keeps the card picker free of duplicates.
+  if (!customElements.get('appliance-status-card')) {
+    customElements.define('appliance-status-card', ApplianceStatusCard);
 
-  window.customCards = window.customCards || [];
-  window.customCards.push({
-    type:        'appliance-status-card',
-    name:        'Appliance Status Card',
-    description: 'Appliance monitor with progress bar, icon, and status rows.',
-    preview:     true,
-  });
+    window.customCards = window.customCards || [];
+    window.customCards.push({
+      type:        'appliance-status-card',
+      name:        'Appliance Status Card',
+      description: 'Appliance monitor with progress bar, icon, and status rows.',
+      preview:     true,
+    });
+  }
 })();
